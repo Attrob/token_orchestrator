@@ -1,0 +1,22 @@
+{
+  "name": "token_orchestrator",
+  "version": "1.0.0",
+  "description": "token orchestrator",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "token"
+  ],
+  "author": "Akshay Yadav",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "mysql2": "^3.9.3",
+    "sequelize": "^6.37.2",
+    "stack": "^0.1.0"
+  }
+}
