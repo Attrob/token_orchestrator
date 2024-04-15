@@ -16,6 +16,8 @@ It includes the below APIs with the described usage.
 6. **PUT: v1/keepalive/:id**
     This is to extend the expiry time of the key passed in the path by 5 minutes.
 
+Every 5 minutes a function runs to deactivate unused tokens and tokens that are past their expiry.
+
 ## Installation
 - Clone the repository
 - Make sure you have *Node* installed in your system befor getting started.
