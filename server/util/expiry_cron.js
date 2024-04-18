@@ -1,7 +1,7 @@
-console.log("Expiry CRON activated");
-function expire_keys() {
+const cron = require('node-cron');
 
-    console.log("Deleting expired keys...");
+function expire_keys() {
+    console.log("RUNNING Expiry CRON \n Deleting expired keys...");
     models.tokens.update({
         in_use: 0,
     },{
@@ -13,6 +13,5 @@ function expire_keys() {
     });
 }
 
-setInterval(expire_keys, 5*60*1000);
-
-module.exports = {expire_keys};
+const job = cron.schedule('*/10 * * * *', expire_keys);
+job.start();

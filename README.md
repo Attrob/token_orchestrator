@@ -29,8 +29,8 @@ Every 5 minutes a function runs to deactivate unused tokens and tokens that are 
 - Use the provided APIs to manage and play around with tokens. The postman collection is attached in the repo.
 
 ## Tech Stack
-- NodeJS
-- ExpressJS
+- NodeJS (v20.10)
+- ExpressJS (v4.19)
 - MySQL
 
 ## Author
