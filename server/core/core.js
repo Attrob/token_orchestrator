@@ -9,12 +9,15 @@ function generate_token_key() {
 
 exports.generate_keys = async (req, res) => {
     try{
-        let new_token_found = false;
-        let token_key = "";
+        const token_keys = [];
+        const create_object_db = [];
         let count = req.body && req.body.count ? req.body.count : 1;
+        const created_at = new Date();
+        const updated_at = new Date();
+        const expiry_at = new Date(Date.now() + 5*60000);
 
-        while (new_token_found === false && count > 0){
-            token_key = generate_token_key();
+        while (count > 0){
+            const token_key = generate_token_key();
             const token_details = await models.tokens.findOne({
                 attributes: ['id', 'is_active'],
                 where: {
@@ -23,25 +26,26 @@ exports.generate_keys = async (req, res) => {
                 raw: true,
             });
             if (!token_details || !token_details.hasOwnProperty("id")){
-                new_token_found = true;
+                create_object_db.push({
+                    token_key: token_key,
+                    in_use: 0,
+                    is_active: 1,
+                    expiry_at: expiry_at,
+                    created_at: created_at,
+                    updated_at: updated_at
+                });
+                token_keys.push(token_key);
                 count -= 1;
             }
         }
 
-        await models.tokens.create({
-            token_key: token_key,
-            in_use: 0,
-            is_active: 1,
-            expiry_at: new Date(Date.now() + 5*60000),
-            created_at: new Date(),
-            updated_at: new Date()
-        });
+        await models.tokens.bulkCreate(create_object_db, { validate: true });
 
-        console.log("Key generated successfully: ", JSON.stringify(token_key));
+        console.log("Key generated successfully: ", JSON.stringify(token_keys));
         return res.status(200).jsonp({
             status_code: 200,
             message: "Key generated successfully",
-            token_key: token_key
+            token_key: token_keys
         });
 
     }catch(err){

@@ -45,7 +45,7 @@ process.on('unhandledRejection', (reason, promise) => {
       error = reason;
     }
     if (response) {
-      error.message = util.format("%s CRID : %s", error.message, response.get(app_constants.corr_id));
+      error.message = util.format("%s CRID : %s", error.message);
       console.log("[unhandledRejection] reason: ", JSON.stringify(error.message));
     }
     console.log("[unhandledRejection] reason: ", JSON.stringify(error.message));
